@@ -53,7 +53,7 @@ async function updateTask(req, res) {
   }
 }
 
-async function getProjectTask(req, res) {
+async function getProjectTasks(req, res) {
   try {
     const { projectId } = req.params;
 
@@ -71,4 +71,4 @@ async function getProjectTask(req, res) {
   }
 }
 
-export { createTask, updateTask, getProjectTask };
+export { createTask, updateTask, getProjectTasks };

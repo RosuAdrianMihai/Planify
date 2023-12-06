@@ -33,4 +33,4 @@ Task.belongsToMany(User, {
   uniqueKey: false,
 });
 
-export { User, Project, ProjectUser, Task };
+export { User, Project, ProjectUser, Task, TaskUser };

@@ -5,6 +5,6 @@ const taskRouter = express.Router();
 
 taskRouter.post("/:projectId", TaskController.createTask);
 taskRouter.put("/:projectId/:taskId", TaskController.updateTask);
-taskRouter.get("/:projectId", TaskController.getProjectTask);
+taskRouter.get("/:projectId", TaskController.getProjectTasks);
 
 export default taskRouter;
