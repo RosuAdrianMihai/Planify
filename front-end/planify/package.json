@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "@adobe/react-spectrum": "^3.32.2",
+    "@heroicons/react": "^2.0.18",
+    "@react-spectrum/toast": "^3.0.0-beta.7",
     "@reduxjs/toolkit": "^1.9.7",
+    "axios": "^1.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.3",
