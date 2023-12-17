@@ -33,7 +33,7 @@ async function signInUser(req, res) {
       });
     }
 
-    res.status(500).json(user);
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({
       message: "Internal server error",
