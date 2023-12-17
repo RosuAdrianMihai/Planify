@@ -28,14 +28,19 @@ const appRouter = createBrowserRouter([
         children: [
           {
             path: ":user_id",
-            element: "View Projects",
+            element: <div>Hello</div>,
             // loader: userProjects,
             children: [
+              {
+                path: "tasks",
+                element: "View user tasks",
+                // loader: viewUserTasks
+              },
               {
                 path: ":project_id",
                 element: "View project tasks",
                 // loader: viewProjectTasks,
-              },
+              }
             ],
           },
         ],
