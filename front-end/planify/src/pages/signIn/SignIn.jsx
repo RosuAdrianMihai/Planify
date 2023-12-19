@@ -65,7 +65,7 @@ function SignIn() {
         timeout: 5000
       })
 
-      // return
+      return
     }
 
     let data = Object.fromEntries(
@@ -80,7 +80,8 @@ function SignIn() {
       navigate(`/common/${user.id}`)
     }catch(error){
       console.log(error)
-      ToastQueue.negative(error.response.data.message, {
+      const errorMessage = error.response.data.message
+      ToastQueue.negative(errorMessage, {
         timeout: 5000
       })
     }

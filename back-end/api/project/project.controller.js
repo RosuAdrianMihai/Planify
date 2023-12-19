@@ -3,6 +3,7 @@ import { Project } from "../../models/index.js";
 async function createProject(req, res) {
   try {
     const projectData = req.body;
+    console.log(projectData);
     const project = await Project.create(projectData);
 
     res.status(200).json({

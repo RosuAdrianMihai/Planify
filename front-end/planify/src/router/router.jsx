@@ -1,16 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import RoleBasedAccess from "./RoleBasedAccess.jsx";
-import {
-  userProjects,
-  getExecutants,
-  getUserTasks,
-} from "../loaders/userLoaders.js";
-import { signInUser } from "../actions/userActions.js";
-import { viewProjectTasks } from "../loaders/projectLoaders.js";
-import { createProject } from "../actions/projectActions.js";
-import { createTask } from "../actions/taskActions.js";
 import App from "../App.jsx";
 import SignIn from "../pages/signIn/SignIn.jsx";
+import CreateProject from "../pages/createProject/CreateProject.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -20,7 +12,6 @@ const appRouter = createBrowserRouter([
       {
         path: "/",
         element: <SignIn />,
-        action: signInUser,
       },
       {
         path: "/common",
@@ -29,17 +20,14 @@ const appRouter = createBrowserRouter([
           {
             path: ":user_id",
             element: <div>Hello</div>,
-            // loader: userProjects,
             children: [
               {
                 path: "tasks",
                 element: "View user tasks",
-                // loader: viewUserTasks
               },
               {
                 path: ":project_id",
                 element: "View project tasks",
-                // loader: viewProjectTasks,
               }
             ],
           },
@@ -51,13 +39,11 @@ const appRouter = createBrowserRouter([
         children: [
           {
             path: "create-project",
-            element: "Create project",
-            // action: createProject,
+            element: <CreateProject />,
           },
           {
             path: "add-user",
             element: "Add user",
-            // action: createProject,
           },
         ],
       },
@@ -68,17 +54,14 @@ const appRouter = createBrowserRouter([
           {
             path: "create-task",
             element: "Create task",
-            // action: createTask,
           },
           {
             path: "view-executants",
             element: "View executants",
-            // loader: getExecutants,
             children: [
               {
                 path: ":user_id",
                 element: "View executant tasks",
-                // loader: getUserTasks,
               },
             ],
           },
@@ -91,7 +74,6 @@ const appRouter = createBrowserRouter([
           {
             path: ":user_id",
             element: "View own tasks",
-            // loader: getUserTasks,
           },
         ],
       },
