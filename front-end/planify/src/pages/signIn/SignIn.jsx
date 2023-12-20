@@ -5,6 +5,7 @@ import axios from "axios"
 import { URL } from "../../utils/utils.js"
 import { useDispatch } from "react-redux"
 import { setUser } from "../../store/userSlice.js"
+import { setProjects } from "../../store/projectSlice.js"
 import { useNavigate } from "react-router-dom"
 import { ToastQueue } from "@react-spectrum/toast"
 
@@ -73,10 +74,14 @@ function SignIn() {
     )
 
     try{
-      const response = await axios.post(`${URL}/user/signIn`, data)
-      const user = response.data
-
+      const responseUser = await axios.post(`${URL}/user/signIn`, data)
+      const user = responseUser.data
       dispatch(setUser(user))
+
+      const responseProjects = await axios.post(`${URL}/projectUser`, user)
+      const projects = responseProjects.data
+      dispatch(setProjects(projects))
+
       navigate(`/common/${user.id}`)
     }catch(error){
       console.log(error)

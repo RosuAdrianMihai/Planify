@@ -1,4 +1,5 @@
 import { ProjectUser } from "./../../models/index.js";
+import { Project } from "./../../models/index.js";
 
 async function addProjectMember(req, res) {
   try {
@@ -34,4 +35,36 @@ async function addProjectMember(req, res) {
   }
 }
 
-export { addProjectMember };
+async function getProjectsMember(req, res) {
+  try {
+    const user = req.body;
+
+    console.log(user);
+
+    let projects = [];
+
+    if (user.position === "admin") {
+      projects = await Project.findAll();
+      return res.status(200).json(projects);
+    }
+
+    const userProjects = await ProjectUser.findAll({
+      where: {
+        UserId: user.id,
+      },
+    });
+
+    for (const userProject of userProjects) {
+      const project = await Project.findByPk(userProject.ProjectId);
+      projects.push(project);
+    }
+
+    res.status(200).json(projects);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error getting the user projects",
+    });
+  }
+}
+
+export { addProjectMember, getProjectsMember };

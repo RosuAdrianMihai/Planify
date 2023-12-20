@@ -1,6 +1,5 @@
 import "./CreateProject.css"
-import { useSelector, useDispatch } from "react-redux"
-import { addProject } from "../../store/projectSlice"
+import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { Form, TextField, TextArea, Button } from '@adobe/react-spectrum'
 import axios from "axios"
@@ -9,7 +8,6 @@ import { ToastQueue } from "@react-spectrum/toast"
 
 function CreateProject() {
     const user = useSelector((state) => state.user)
-    const dispatch = useDispatch()
 
     const navigate = useNavigate()
 
@@ -22,8 +20,6 @@ function CreateProject() {
         
         try{
             const response = await axios.post(`${URL}/project`, data)
-            const project = response.data.data
-            dispatch(addProject(project))
 
             const successMessage = response.data.message
             ToastQueue.positive(successMessage, {
@@ -62,7 +58,7 @@ function CreateProject() {
             minLength={20}
             />
 
-            <Button type="submit">Create</Button>
+            <Button type="submit" variant="primary">Create</Button>
         </Form>
     </div>
   )

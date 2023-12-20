@@ -3,6 +3,8 @@ import RoleBasedAccess from "./RoleBasedAccess.jsx";
 import App from "../App.jsx";
 import SignIn from "../pages/signIn/SignIn.jsx";
 import CreateProject from "../pages/createProject/CreateProject.jsx";
+import Projects from "../pages/projects/Projects.jsx";
+import Project from "../pages/project/Project.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -19,17 +21,15 @@ const appRouter = createBrowserRouter([
         children: [
           {
             path: ":user_id",
-            element: <div>Hello</div>,
-            children: [
-              {
-                path: "tasks",
-                element: "View user tasks",
-              },
-              {
-                path: ":project_id",
-                element: "View project tasks",
-              }
-            ],
+            element: <Projects />,
+          },
+          {
+            path: ":user_id/:project_id/tasks",
+            element: "View user tasks",
+          },
+          {
+            path: ":user_id/:project_id",
+            element: <Project />,
           },
         ],
       },

@@ -24,6 +24,7 @@
     position: fixed;
     transition: 1s;
     background-color: rgb(23, 23, 23);
+    z-index: 5;
 }
 
 .navContainer a {

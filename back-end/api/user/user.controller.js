@@ -41,4 +41,20 @@ async function signInUser(req, res) {
   }
 }
 
-export { createUser, signInUser };
+async function getManagers(req, res) {
+  try {
+    const managers = await User.findAll({
+      where: {
+        position: "manager",
+      },
+    });
+
+    res.status(200).json(managers);
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+}
+
+export { createUser, signInUser, getManagers };

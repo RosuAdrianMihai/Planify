@@ -8,7 +8,7 @@ export const projectSlice = createSlice({
   name: "project",
   initialState,
   reducers: {
-    getProjects(state, action) {
+    setProjects(state, action) {
       return action.payload;
     },
     addProject(state, action) {
@@ -17,6 +17,6 @@ export const projectSlice = createSlice({
   },
 });
 
-export const { getProjects, addProject } = projectSlice.actions;
+export const { setProjects, addProject } = projectSlice.actions;
 
 export default projectSlice.reducer;
