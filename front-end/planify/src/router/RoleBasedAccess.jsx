@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom"
 import NoAccess from "./NoAccess"
 
 function RoleBasedAccess({ roles }) {
-    const user = useSelector((state) => state.user)
+    const { user } = useSelector((state) => state.users)
 
     if(user && roles.includes(user.position)){
         return (

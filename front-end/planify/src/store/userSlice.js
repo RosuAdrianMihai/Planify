@@ -1,20 +1,44 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = null;
+const initialState = {
+  user: null,
+  managers: [],
+  members: [],
+};
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     setUser: (state, action) => {
-      return action.payload;
+      state.user = action.payload;
     },
     clearUser: (state) => {
-      return null;
+      state.user = null;
+    },
+    setUsers: (state, action) => {
+      const users = action.payload;
+
+      for (const user of users) {
+        if (user.position === "manager") {
+          state.managers.push(user);
+        } else if (user.position === "member") {
+          state.members.push(user);
+        }
+      }
+    },
+    addUser: (state, action) => {
+      let createdUser = action.payload;
+
+      if (createdUser.position === "manager") {
+        state.managers.push(createdUser);
+      } else if (createdUser.position === "member") {
+        state.members.push(createdUser);
+      }
     },
   },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { setUser, clearUser, setUsers, addUser } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -3,6 +3,19 @@ import { User } from "../../models/index.js";
 async function createUser(req, res) {
   try {
     const userData = req.body;
+
+    const foundUser = await User.findOne({
+      where: {
+        email: userData.email,
+      },
+    });
+
+    if (foundUser) {
+      return res.status(500).json({
+        message: "There is already an account with this email",
+      });
+    }
+
     const user = await User.create(userData);
 
     res.status(200).json({
@@ -41,15 +54,11 @@ async function signInUser(req, res) {
   }
 }
 
-async function getManagers(req, res) {
+async function getUsers(req, res) {
   try {
-    const managers = await User.findAll({
-      where: {
-        position: "manager",
-      },
-    });
+    const users = await User.findAll();
 
-    res.status(200).json(managers);
+    res.status(200).json(users);
   } catch (error) {
     res.status(500).json({
       message: "Internal server error",
@@ -57,4 +66,4 @@ async function getManagers(req, res) {
   }
 }
 
-export { createUser, signInUser, getManagers };
+export { createUser, signInUser, getUsers };

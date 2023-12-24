@@ -46,11 +46,8 @@
         display: none;
     }
 
-    .navContainer {
-        position: relative;
-    }
-
     .pageContainer {
         padding: 5vh;
+        margin-left: min(30vw - 12px, 250px);
     }
 }

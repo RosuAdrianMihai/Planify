@@ -5,6 +5,7 @@ import SignIn from "../pages/signIn/SignIn.jsx";
 import CreateProject from "../pages/createProject/CreateProject.jsx";
 import Projects from "../pages/projects/Projects.jsx";
 import Project from "../pages/project/Project.jsx";
+import CreateUser from "../pages/createUser/CreateUser.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ const appRouter = createBrowserRouter([
           },
           {
             path: ":user_id/:project_id/tasks",
-            element: "View user tasks",
+            element: "View project tasks",
           },
           {
             path: ":user_id/:project_id",
@@ -42,8 +43,8 @@ const appRouter = createBrowserRouter([
             element: <CreateProject />,
           },
           {
-            path: "add-user",
-            element: "Add user",
+            path: "create-account",
+            element: <CreateUser />,
           },
         ],
       },

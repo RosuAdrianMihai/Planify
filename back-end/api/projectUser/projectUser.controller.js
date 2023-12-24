@@ -1,4 +1,4 @@
-import { ProjectUser } from "./../../models/index.js";
+import { ProjectUser, User } from "./../../models/index.js";
 import { Project } from "./../../models/index.js";
 
 async function addProjectMember(req, res) {
@@ -14,7 +14,7 @@ async function addProjectMember(req, res) {
     });
 
     if (foundMember) {
-      return res.status(200).json({
+      return res.status(500).json({
         message: "The user is already in the project",
       });
     }
@@ -38,8 +38,6 @@ async function addProjectMember(req, res) {
 async function getProjectsMember(req, res) {
   try {
     const user = req.body;
-
-    console.log(user);
 
     let projects = [];
 
@@ -67,4 +65,30 @@ async function getProjectsMember(req, res) {
   }
 }
 
-export { addProjectMember, getProjectsMember };
+async function getProjectManagers(req, res) {
+  try {
+    const { projectId } = req.params;
+
+    let managers = [];
+
+    const projectManagers = await ProjectUser.findAll({
+      where: {
+        ProjectId: projectId,
+        managerId: null,
+      },
+    });
+
+    for (const manager of projectManagers) {
+      const userManager = await User.findByPk(manager.UserId);
+      managers.push(userManager);
+    }
+
+    res.status(200).json(managers);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error getting the project managers",
+    });
+  }
+}
+
+export { addProjectMember, getProjectsMember, getProjectManagers };

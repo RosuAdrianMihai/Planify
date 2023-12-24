@@ -38,7 +38,7 @@ function Sidebar({ children, user }) {
             {role === "admin" && 
             <>
                 <Link to="/admin/create-project">Create project</Link>
-                <Link to="/admin/add-user">Create user</Link>
+                <Link to="/admin/create-account">Create account</Link>
             </>}
 
             {(role === "manager" || role === "executant") && 

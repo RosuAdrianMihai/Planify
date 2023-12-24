@@ -4,7 +4,7 @@ import { Form, TextField, Button } from '@adobe/react-spectrum'
 import axios from "axios"
 import { URL } from "../../utils/utils.js"
 import { useDispatch } from "react-redux"
-import { setUser } from "../../store/userSlice.js"
+import { setUser, setUsers } from "../../store/userSlice.js"
 import { setProjects } from "../../store/projectSlice.js"
 import { useNavigate } from "react-router-dom"
 import { ToastQueue } from "@react-spectrum/toast"
@@ -81,6 +81,10 @@ function SignIn() {
       const responseProjects = await axios.post(`${URL}/projectUser`, user)
       const projects = responseProjects.data
       dispatch(setProjects(projects))
+
+      const responseUsers = await axios.get(`${URL}/user`)
+      const users = responseUsers.data
+      dispatch(setUsers(users))
 
       navigate(`/common/${user.id}`)
     }catch(error){

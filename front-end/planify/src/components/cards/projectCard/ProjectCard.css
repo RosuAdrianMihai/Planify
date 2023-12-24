@@ -1,5 +1,13 @@
 .projectCardContainer {
+    min-width: 300px;
+    width: 80vw;
     border: 2px solid white;
     border-radius: 12px;
     padding: 15px 13px;
+}
+
+@media (min-width: 800px) {
+    .projectCardContainer {
+        width: 60vw;
+    }
 }
