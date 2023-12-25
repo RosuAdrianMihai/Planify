@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { Bars4Icon, XMarkIcon } from "@heroicons/react/24/solid"
 import { Button } from "@adobe/react-spectrum"
-import { clearUser } from "../../store/userSlice"
+import { clearUsers } from "../../store/userSlice"
+import { clearProjects } from "../../store/projectSlice"
 
 function Sidebar({ children, user }) {
   const { position: role } = user
@@ -43,7 +44,7 @@ function Sidebar({ children, user }) {
 
             {(role === "manager" || role === "executant") && 
             <>
-                <Link to={`/common/${user.id}/tasks`}>Tasks</Link>
+                <Link to={`user/${user.id}/tasks`}>Tasks</Link>
             </>
             }
 
@@ -53,7 +54,8 @@ function Sidebar({ children, user }) {
             bottom="size-300"
             onPress={() => {
                 navigate("/")
-                dispatch(clearUser())
+                dispatch(clearUsers())
+                dispatch(clearProjects())
             }} 
             >Logout
             </Button>

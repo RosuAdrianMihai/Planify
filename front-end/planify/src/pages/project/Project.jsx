@@ -1,10 +1,8 @@
 import "./Project.css"
 import { useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
-import { PlusCircleIcon } from "@heroicons/react/24/outline"
-import { Form, Button, ActionButton, Dialog, DialogTrigger, Heading, Divider, Content } from "@adobe/react-spectrum"
-import { useState } from "react"
 import AddMemberModal from "../../components/modals/addMemberModal/AddMemberModal"
+import CreateTaskModal from "../../components/modals/createTaskModal/CreateTaskModal"
 
 function Project() {
   const { user } = useSelector((state) => state.users)
@@ -19,6 +17,11 @@ function Project() {
           {
           user.position === "admin" &&
           <AddMemberModal />
+          }
+
+          {
+            user.position === "manager" && 
+            <CreateTaskModal />
           }
         </h1>
 

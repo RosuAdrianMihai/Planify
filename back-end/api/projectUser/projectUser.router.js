@@ -9,5 +9,9 @@ projectUserRouter.get(
   "/:projectId/managers",
   ProjectUserController.getProjectManagers
 );
+projectUserRouter.get(
+  "/:projectId/:managerId",
+  ProjectUserController.getProjectManagerTeam
+);
 
 export default projectUserRouter;

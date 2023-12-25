@@ -91,4 +91,35 @@ async function getProjectManagers(req, res) {
   }
 }
 
-export { addProjectMember, getProjectsMember, getProjectManagers };
+async function getProjectManagerTeam(req, res) {
+  try {
+    const { projectId, managerId } = req.params;
+
+    const team = [];
+
+    const teamMembers = await ProjectUser.findAll({
+      where: {
+        managerId,
+        ProjectId: projectId,
+      },
+    });
+
+    for (const teamMember of teamMembers) {
+      const member = await User.findByPk(teamMember.UserId);
+      team.push(member);
+    }
+
+    res.status(200).json(team);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error getting the team members",
+    });
+  }
+}
+
+export {
+  addProjectMember,
+  getProjectsMember,
+  getProjectManagers,
+  getProjectManagerTeam,
+};

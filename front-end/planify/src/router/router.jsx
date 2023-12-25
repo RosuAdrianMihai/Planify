@@ -73,7 +73,7 @@ const appRouter = createBrowserRouter([
         element: <RoleBasedAccess roles={["manager", "executant"]} />,
         children: [
           {
-            path: ":user_id",
+            path: ":user_id/tasks",
             element: "View own tasks",
           },
         ],

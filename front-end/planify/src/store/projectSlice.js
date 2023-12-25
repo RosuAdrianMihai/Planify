@@ -14,9 +14,12 @@ export const projectSlice = createSlice({
     addProject(state, action) {
       state.projects.push(action.payload);
     },
+    clearProjects(state) {
+      state.projects = [];
+    },
   },
 });
 
-export const { setProjects, addProject } = projectSlice.actions;
+export const { setProjects, addProject, clearProjects } = projectSlice.actions;
 
 export default projectSlice.reducer;
