@@ -6,6 +6,7 @@ async function createTask(req, res) {
     const taskData = req.body;
 
     const task = await Task.create({
+      managerId: taskData.managerId,
       title: taskData.title,
       description: taskData.description,
       status: "OPEN",

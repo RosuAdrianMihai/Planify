@@ -18,6 +18,7 @@ function CreateTaskModal() {
         event.preventDefault()
 
         const data = Object.fromEntries(new FormData(event.currentTarget))
+        data.managerId = user_id
 
         let message = ""
         let toastType = ""

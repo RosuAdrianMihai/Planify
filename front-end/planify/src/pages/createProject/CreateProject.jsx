@@ -1,15 +1,16 @@
 import "./CreateProject.css"
-import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
 import { Form, TextField, TextArea, Button } from '@adobe/react-spectrum'
 import axios from "axios"
 import { URL } from "../../utils/utils"
 import { ToastQueue } from "@react-spectrum/toast"
+import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { addProject } from "../../store/projectSlice"
 
 function CreateProject() {
-    const user = useSelector((state) => state.user)
+    const [formKey, setFormKey] = useState(0)
 
-    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const onSubmit = async(event) => {
         event.preventDefault()
@@ -25,7 +26,10 @@ function CreateProject() {
             ToastQueue.positive(successMessage, {
                 timeout: 5000
             })
-            navigate(`/common/${user.id}`)
+
+            dispatch(addProject(response.data.data))
+
+            setFormKey((prevFormKey) => prevFormKey + 1)
         }catch(error){
             console.log(error)
             const errorMessage = error.response.data.message
@@ -40,6 +44,7 @@ function CreateProject() {
         <h1>Project</h1>
 
         <Form 
+        key={formKey}
         onSubmit={onSubmit}
         validationBehavior="native"
         width="size-3600"

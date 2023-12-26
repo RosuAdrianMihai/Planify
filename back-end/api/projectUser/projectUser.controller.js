@@ -117,9 +117,61 @@ async function getProjectManagerTeam(req, res) {
   }
 }
 
+async function getTeamData(req, res) {
+  try {
+    const { projectId, userId } = req.params;
+
+    const user = await User.findByPk(userId);
+
+    let data = {
+      manager: null,
+      members: [],
+    };
+
+    let managerId;
+
+    if (user.position === "manager") {
+      data.manager = user;
+      managerId = userId;
+    } else if (user.position === "member") {
+      const userProject = await ProjectUser.findOne({
+        where: {
+          ProjectId: projectId,
+          UserId: userId,
+        },
+      });
+
+      managerId = userProject.managerId;
+
+      const manager = await User.findByPk(managerId);
+      data.manager = manager;
+    }
+
+    const members = await ProjectUser.findAll({
+      where: {
+        ProjectId: projectId,
+        managerId,
+      },
+    });
+
+    for (const member of members) {
+      const memberData = await User.findByPk(member.UserId);
+
+      data.members.push(memberData);
+    }
+
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({
+      message: "There was an error fetching the tasks",
+    });
+  }
+}
+
 export {
   addProjectMember,
   getProjectsMember,
   getProjectManagers,
   getProjectManagerTeam,
+  getTeamData,
 };

@@ -1,6 +1,7 @@
 import { TaskUser } from "../../models/index.js";
 import { Task } from "../../models/index.js";
 import { User } from "../../models/index.js";
+import { ProjectUser } from "../../models/index.js";
 
 async function requestTask(req, res) {
   try {
@@ -61,6 +62,12 @@ async function assignTask(req, res) {
         TaskId: taskId,
         isAssigned: false,
       },
+    });
+
+    const task = await Task.findByPk(taskId);
+
+    await task.update({
+      status: "PENDING",
     });
 
     const user = await User.findByPk(userId);

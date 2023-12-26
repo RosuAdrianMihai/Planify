@@ -13,5 +13,9 @@ projectUserRouter.get(
   "/:projectId/:managerId",
   ProjectUserController.getProjectManagerTeam
 );
+projectUserRouter.get(
+  "/:projectId/team/:userId",
+  ProjectUserController.getTeamData
+);
 
 export default projectUserRouter;

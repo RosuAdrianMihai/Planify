@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import ProjectCard from "../../components/cards/projectCard/ProjectCard"
 
 function Projects() {
-    const projects = useSelector((state) => state.projects)
+    const { projects } = useSelector((state) => state.projects)
 
   return (
     <div className="projectsContainer">

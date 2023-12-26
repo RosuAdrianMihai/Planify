@@ -6,7 +6,7 @@ import CreateTaskModal from "../../components/modals/createTaskModal/CreateTaskM
 
 function Project() {
   const { user } = useSelector((state) => state.users)
-  const projects = useSelector((state) => state.projects)
+  const { projects } = useSelector((state) => state.projects)
   const { project_id } = useParams()
 
   const currentProject = projects.find((project) => project.id === Number(project_id))
