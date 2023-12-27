@@ -6,11 +6,15 @@ import axios from "axios"
 import { URL } from "../../../utils/utils"
 import { useParams } from "react-router-dom"
 import { ToastQueue } from "@react-spectrum/toast"
+import { useDispatch } from "react-redux"
+import { addTask } from "../../../store/taskSlice"
 
 function CreateTaskModal() {
     const [teamMembers, setTeamMembers] = useState([])
 
     const { project_id, user_id } = useParams()
+
+    const dispatch = useDispatch()
 
     const [formKey, setFormKey] = useState(0)
 
@@ -26,16 +30,23 @@ function CreateTaskModal() {
         try{
             const responseTask = await axios.post(`${URL}/task/${project_id}`, data)
 
-            const task  = responseTask.data.data
+            let task  = responseTask.data.data
+            task.assignedUser = null
             message = responseTask.data.message
 
-            if(data.UserId){
-                const responseAssignTask = await axios.put(`${URL}/taskUser/${task.id}/${data.UserId}`, {
+            if(data.userSelected){
+                const selectedUser = JSON.parse(data.userSelected)
+                const responseAssignTask = await axios.put(`${URL}/taskUser/${task.id}/${selectedUser.id}`, {
                     isAssigned: true
                 })
 
+                task = responseAssignTask.data.data
+                task.assignedUser = selectedUser
+            
                 message = responseAssignTask.data.message
             }
+
+            dispatch(addTask(task))
 
             toastType = "positive"
 
@@ -89,14 +100,14 @@ function CreateTaskModal() {
                         />
 
                         <select
-                        name="UserId"
+                        name="userSelected"
                         className="createTaskModalSelect"
                         >
                             <option selected disabled value="">Assign task (optional)</option>
 
                             {
                                 teamMembers.map((teamMember) => {
-                                    return <option key={teamMember.id} value={teamMember.id}>{teamMember.name}</option>
+                                    return <option key={teamMember.id} value={JSON.stringify(teamMember)}>{teamMember.name}</option>
                                 })
                             }
                         </select>

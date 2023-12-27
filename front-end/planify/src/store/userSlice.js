@@ -22,6 +22,14 @@ export const userSlice = createSlice({
       const users = action.payload;
 
       for (const user of users) {
+        const foundUser =
+          state.managers.some((manager) => manager.id === user.id) ||
+          state.members.some((member) => member.id === user.id);
+
+        if (foundUser) {
+          continue;
+        }
+
         if (user.position === "manager") {
           state.managers.push(user);
         } else if (user.position === "member") {

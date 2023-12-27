@@ -8,6 +8,7 @@ import { setUser, setUsers } from "../../store/userSlice.js"
 import { setProjects } from "../../store/projectSlice.js"
 import { useNavigate } from "react-router-dom"
 import { ToastQueue } from "@react-spectrum/toast"
+import { setTasks } from "../../store/taskSlice.js"
 
 function SignIn() {
   const [email, setEmail] = useState("")
@@ -82,9 +83,23 @@ function SignIn() {
       const projects = responseProjects.data
       dispatch(setProjects(projects))
 
-      const responseUsers = await axios.get(`${URL}/user`)
-      const users = responseUsers.data
-      dispatch(setUsers(users))
+      if(user.position === "admin"){
+        const responseUsers = await axios.get(`${URL}/user`)
+        const users = responseUsers.data
+        dispatch(setUsers(users))
+      }else{
+        for(const project of projects){
+          const responseTeamMembers = await axios.get(`${URL}/projectUser/${project.id}/team/${user.id}`)
+          const teamMembers = responseTeamMembers.data
+
+          dispatch(setUsers([teamMembers.manager, ...teamMembers.members]))
+
+          const responseTeamTasks = await axios.get(`${URL}/projectUser/${project.id}/team/${teamMembers.manager.id}/tasks`)
+          const teamTasks = responseTeamTasks.data
+
+          dispatch(setTasks(teamTasks))
+        }
+      }
 
       navigate(`/common/${user.id}`)
     }catch(error){

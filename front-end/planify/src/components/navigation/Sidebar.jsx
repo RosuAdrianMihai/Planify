@@ -6,6 +6,7 @@ import { Bars4Icon, XMarkIcon } from "@heroicons/react/24/solid"
 import { Button } from "@adobe/react-spectrum"
 import { clearUsers } from "../../store/userSlice"
 import { clearProjects } from "../../store/projectSlice"
+import { clearTasks } from "../../store/taskSlice"
 
 function Sidebar({ children, user }) {
   const { position: role } = user
@@ -56,6 +57,7 @@ function Sidebar({ children, user }) {
                 navigate("/")
                 dispatch(clearUsers())
                 dispatch(clearProjects())
+                dispatch(clearTasks())
             }} 
             >Logout
             </Button>
