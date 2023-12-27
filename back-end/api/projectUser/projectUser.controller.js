@@ -1,5 +1,10 @@
-import { ProjectUser, User } from "./../../models/index.js";
-import { Project } from "./../../models/index.js";
+import {
+  ProjectUser,
+  Project,
+  Task,
+  TaskUser,
+  User,
+} from "./../../models/index.js";
 
 async function addProjectMember(req, res) {
   try {
@@ -117,7 +122,7 @@ async function getProjectManagerTeam(req, res) {
   }
 }
 
-async function getTeamData(req, res) {
+async function getTeamMembers(req, res) {
   try {
     const { projectId, userId } = req.params;
 
@@ -163,7 +168,50 @@ async function getTeamData(req, res) {
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({
-      message: "There was an error fetching the tasks",
+      message: "There was an error fetching the team members",
+    });
+  }
+}
+
+async function getTeamTasks(req, res) {
+  try {
+    const { projectId, managerId } = req.params;
+
+    const tasks = await Task.findAll({
+      where: {
+        ProjectId: projectId,
+        managerId,
+      },
+    });
+
+    let tasksData = [];
+
+    for (const task of tasks) {
+      let taskData = { ...task.dataValues };
+
+      taskData.assignedUser = null;
+
+      const userTask = await TaskUser.findOne({
+        where: {
+          isAssigned: true,
+          TaskId: task.id,
+        },
+      });
+
+      if (userTask) {
+        console.log(userTask);
+
+        const user = await User.findByPk(userTask.UserId);
+        taskData.assignedUser = user;
+      }
+
+      tasksData.push(taskData);
+    }
+
+    res.status(200).json(tasksData);
+  } catch (error) {
+    res.status(500).json({
+      message: "There was an error fetching the team tasks",
     });
   }
 }
@@ -173,5 +221,6 @@ export {
   getProjectsMember,
   getProjectManagers,
   getProjectManagerTeam,
-  getTeamData,
+  getTeamMembers,
+  getTeamTasks,
 };

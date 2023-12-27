@@ -15,7 +15,11 @@ projectUserRouter.get(
 );
 projectUserRouter.get(
   "/:projectId/team/:userId",
-  ProjectUserController.getTeamData
+  ProjectUserController.getTeamMembers
+);
+projectUserRouter.get(
+  "/:projectId/team/:managerId/tasks",
+  ProjectUserController.getTeamTasks
 );
 
 export default projectUserRouter;

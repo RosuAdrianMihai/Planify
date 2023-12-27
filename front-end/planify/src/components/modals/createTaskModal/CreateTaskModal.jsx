@@ -14,7 +14,7 @@ function CreateTaskModal() {
 
     const [formKey, setFormKey] = useState(0)
 
-    const onSubmit = async(event, close) => {
+    const onSubmit = async(event) => {
         event.preventDefault()
 
         const data = Object.fromEntries(new FormData(event.currentTarget))
@@ -30,7 +30,7 @@ function CreateTaskModal() {
             message = responseTask.data.message
 
             if(data.UserId){
-                const responseAssignTask = await axios.put(`${URL}/taskUser/${task.id}/${user_id}`, {
+                const responseAssignTask = await axios.put(`${URL}/taskUser/${task.id}/${data.UserId}`, {
                     isAssigned: true
                 })
 
@@ -40,7 +40,6 @@ function CreateTaskModal() {
             toastType = "positive"
 
             setFormKey((prevFormKey) => prevFormKey + 1)
-            close()
         }catch(error){
             message = error.response.data.message
             toastType = "negative"
@@ -72,7 +71,7 @@ function CreateTaskModal() {
                 <Content>
                     <Form
                     key={formKey}
-                    onSubmit={(event) => onSubmit(event, close)}
+                    onSubmit={onSubmit}
                     validationBehavior="native"
                     >
                         <TextField 

@@ -27,7 +27,7 @@ function AddMemberModal() {
         }
     }, [selectedPosition])
 
-    const onSubmit = async(event, close) => {
+    const onSubmit = async(event) => {
         event.preventDefault()
 
         const data = Object.fromEntries(new FormData(event.currentTarget))
@@ -47,7 +47,6 @@ function AddMemberModal() {
 
             setSelectedPosition("")
             setFormKey((prevFormKey) => prevFormKey + 1)
-            close()
         }catch(error){
             message = error.response.data.message
             toastType = "negative"
@@ -73,7 +72,7 @@ function AddMemberModal() {
       <Content>
         <Form
         key={formKey}
-        onSubmit={(event) => onSubmit(event, close)}
+        onSubmit={onSubmit}
         >
           <select 
           name="position"
