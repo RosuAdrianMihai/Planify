@@ -1,0 +1,13 @@
+.taskContainer {
+    width: 80%;
+}
+
+.taskHighlight {
+    width: 100%;
+}
+
+.taskHighlight button{
+    padding: 4px 8px;
+    width: 100%;
+    overflow: hidden;
+}

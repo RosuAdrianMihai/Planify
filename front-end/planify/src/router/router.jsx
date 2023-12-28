@@ -18,7 +18,7 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/common",
-        element: <RoleBasedAccess roles={["admin", "manager", "executant"]} />,
+        element: <RoleBasedAccess roles={["admin", "manager", "member"]} />,
         children: [
           {
             path: ":user_id",

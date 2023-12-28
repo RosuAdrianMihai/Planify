@@ -54,14 +54,16 @@ async function assignTask(req, res) {
       await taskUser.update({
         isAssigned,
       });
-    }
 
-    await TaskUser.destroy({
-      where: {
-        TaskId: taskId,
-        isAssigned: false,
-      },
-    });
+      if (isAssigned) {
+        await TaskUser.destroy({
+          where: {
+            TaskId: taskId,
+            isAssigned: false,
+          },
+        });
+      }
+    }
 
     const task = await Task.findByPk(taskId);
 

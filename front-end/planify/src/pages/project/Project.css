@@ -2,9 +2,25 @@
     text-align: center;
 }
 
+.teamManagerHeader {
+    text-align: right;
+    font-size: 18px;
+    margin-bottom: 5vh;
+}
+
 .teamTasksContainer {
     display: flex;
     flex-wrap: wrap;
+    flex: 4;
+}
+
+.tasksContainer {
+    flex: 1;
+}
+
+.tasksContainer h1 {
+    text-align: center;
+    margin-bottom: 3vh;
 }
 
 .taskList { 
@@ -12,4 +28,10 @@
     flex-direction: column;
     align-items: center;
     gap: 5px;
+}
+
+@media (min-width: 800px) {
+    .teamTasksContainer .tasksContainer:nth-child(n + 2) {
+        border-left: 2px solid white;
+    }
 }

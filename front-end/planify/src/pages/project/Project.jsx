@@ -6,6 +6,7 @@ import CreateTaskModal from "../../components/modals/createTaskModal/CreateTaskM
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { URL } from "../../utils/utils"
+import Task from "../../components/task/Task"
 
 function Project() {
   const { user } = useSelector((state) => state.users)
@@ -16,7 +17,11 @@ function Project() {
   const [manager, setManager] = useState(null)
   const [members, setMembers] = useState([])
 
-  const currentProject = projects.find((project) => project.id === Number(project_id))
+  const currentProject = projects.find((project) => project.id == project_id)
+
+  const teamTasks = tasks.filter((task) => {
+    return task.ProjectId == project_id && task.managerId == manager?.id
+  })
 
   useEffect(() => {
     if(user.position !== "admin"){
@@ -28,8 +33,6 @@ function Project() {
       })
     }
   }, [])
-
-  console.log(manager, members, tasks)
 
   return (
     <div>
@@ -49,36 +52,42 @@ function Project() {
 
         {
           user.position !== "admin" && 
-          <section className="teamTasksContainer">
-          <div>
-            <h1>Open</h1>
+          <section>
+              <h2 className="teamManagerHeader">Manager: {manager?.name}</h2>
 
-            <div className="taskList">
-              Hello Open
+            <div className="teamTasksContainer">
+              <div className="tasksContainer">
+                <h1>Open</h1>
+
+                <div className="taskList">
+                  {teamTasks.filter((task) => task.status == "OPEN").map((task) => {
+                    return <Task key={task.id} taskData={task} user={user} manager={manager} members={members} />
+                  })}
+                </div>
+              </div>
+
+            <div className="tasksContainer">
+              <h1>Pending</h1>
+
+              <div className="taskList">
+                Hello Pending
+              </div>
             </div>
-          </div>
 
-          <div>
-            <h1>Pending</h1>
+            <div className="tasksContainer">
+              <h1>Completed</h1>
 
-            <div className="taskList">
-              Hello Pending
+              <div className="taskList">
+                Hello Completed
+              </div>
             </div>
-          </div>
 
-          <div>
-            <h1>Completed</h1>
+            <div className="tasksContainer">
+              <h1>Closed</h1>
 
-            <div className="taskList">
-              Hello Completed
-            </div>
-          </div>
-
-          <div>
-            <h1>Closed</h1>
-
-            <div className="taskList">
-              Hello closed
+              <div className="taskList">
+                Hello closed
+              </div>
             </div>
           </div>
       </section>

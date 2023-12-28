@@ -33,7 +33,13 @@ function AddMemberModal() {
         const data = Object.fromEntries(new FormData(event.currentTarget))
 
         if(data.position === "manager"){
-            data.managerId = null
+          data.managerId = null
+        }else if(!data.managerId){
+          ToastQueue.negative("You must select a manager", {
+            timeout: 5000
+          })
+
+          return
         }
 
         let message = ""
