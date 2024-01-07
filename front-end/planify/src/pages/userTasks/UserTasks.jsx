@@ -1,7 +1,6 @@
 import "./UserTasks.css"
 import { useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
-import capitalize from "../../utils/capitalize"
 
 function UserTasks() {
   const { user_id } = useParams()
@@ -35,7 +34,7 @@ function UserTasks() {
   }
 
   if(projects.length === 0){
-    return <h2>You are not in a member or manager in any projects</h2>
+    return <h2>You are not a {user.position} in any project</h2>
   }
 
   return (
