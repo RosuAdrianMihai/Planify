@@ -1,0 +1,9 @@
+.projectMemberContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.projectMemberContainer a {
+    text-decoration: underline;
+}

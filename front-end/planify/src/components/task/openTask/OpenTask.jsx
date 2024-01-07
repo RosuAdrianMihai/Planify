@@ -1,17 +1,17 @@
-import "./OpenTask.css"
-import { Heading, Divider, Content, Form, Picker, Item, ButtonGroup, Button } from "@adobe/react-spectrum"
+import { Heading, Divider, Content, Form, Picker, Item, Button } from "@adobe/react-spectrum"
 import axios from "axios"
 import { URL } from "../../../utils/utils"
 import { useDispatch } from "react-redux"
 import { updateTask } from "../../../store/taskSlice"
 import { ToastQueue } from "@react-spectrum/toast"
+import capitalize from "../../../utils/capitalize"
 
 function OpenTask({ taskData, user, manager, members, close }) {
   const dispatch = useDispatch()
 
   const isManager = manager.id == user.id ? true : false
 
-  const assignTask = async(assignedUserId, close) => {
+  const assignTask = async(assignedUserId) => {
     let userData = members.find((member) => member.id == assignedUserId)
 
     let toastType = ""
@@ -52,7 +52,7 @@ function OpenTask({ taskData, user, manager, members, close }) {
 
   return (
     <>
-        <Heading>Task info</Heading>
+        <Heading>Task info - {capitalize(taskData.status)}</Heading>
 
         <Divider />
 
@@ -64,7 +64,7 @@ function OpenTask({ taskData, user, manager, members, close }) {
             <p>Description: {taskData.description}</p>
 
             {
-                isManager === true && 
+                isManager === true ?
                 <Form
                 onSubmit={onSubmit}
                 validationBehavior="native"
@@ -78,17 +78,18 @@ function OpenTask({ taskData, user, manager, members, close }) {
                         {(member) => <Item key={member.id}>{member.name}</Item>}
                     </Picker>
 
-                    <Button type="submit">Assign</Button>
+                    <Button 
+                    type="submit"
+                    marginTop="40px">Assign</Button>
                 </Form>
+                :
+                <Button 
+                variant="primary"
+                width="100%"
+                marginTop="30px" 
+                onPress={() => assignTask(user.id)}>Assume</Button>
             }
         </Content>
-
-        {
-            isManager === false && 
-            <ButtonGroup>
-                <Button variant="primary" onPress={(event) => assignTask(user.id, close)}>Assume</Button>
-            </ButtonGroup>
-        }
     </>
   )
 }

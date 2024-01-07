@@ -1,0 +1,10 @@
+.userProjectTasksHeader {
+    text-align: center;
+}
+
+.memberTaskContainer {
+    border: solid white 2px;
+    border-radius: 12px;
+    padding: 5px 10px;
+    margin-top: 3vh;
+}

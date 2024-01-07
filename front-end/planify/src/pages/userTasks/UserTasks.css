@@ -1,0 +1,15 @@
+.userTasksHeader {
+    text-align: center;
+}
+
+.userTaskContainer {
+    border: solid white 2px;
+    border-radius: 12px;
+    padding: 5px 10px;
+    margin-top: 3vh;
+}
+
+.taskHeader {
+    display: flex;
+    justify-content: space-between;
+}

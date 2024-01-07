@@ -71,7 +71,7 @@ function AddMemberModal() {
 
     {(close) => (  
     <Dialog isDismissable>
-      <Heading Heading>Add member</Heading>
+      <Heading>Add member</Heading>
 
       <Divider />
 

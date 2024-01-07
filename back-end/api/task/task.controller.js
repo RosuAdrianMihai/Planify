@@ -24,6 +24,34 @@ async function createTask(req, res) {
   }
 }
 
+async function updateTaskStatus(req, res) {
+  try {
+    const { status } = req.body;
+    const { taskId } = req.params;
+
+    const task = await Task.findByPk(taskId);
+
+    if (!task) {
+      return res.status(500).json({
+        message: "Task not found",
+      });
+    }
+
+    task.status = status;
+
+    await task.save();
+
+    res.status(200).json({
+      message: `Task ${status.toLowerCase()}`,
+      data: task,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+}
+
 async function updateTask(req, res) {
   try {
     const { projectId, taskId } = req.params;
@@ -72,4 +100,4 @@ async function getProjectTasks(req, res) {
   }
 }
 
-export { createTask, updateTask, getProjectTasks };
+export { createTask, updateTaskStatus, updateTask, getProjectTasks };

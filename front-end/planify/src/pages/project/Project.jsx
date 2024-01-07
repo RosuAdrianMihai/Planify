@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { URL } from "../../utils/utils"
 import Task from "../../components/task/Task"
+import ListOfMembersModal from "../../components/modals/listOfMembersModal/ListOfMembersModal"
 
 function Project() {
   const { user } = useSelector((state) => state.users)
@@ -44,7 +45,10 @@ function Project() {
 
           {
             user.position === "manager" && 
-            <CreateTaskModal />
+            <>
+              <CreateTaskModal />
+              <ListOfMembersModal members={members} />
+            </>
           }
         </h1>
 
@@ -70,7 +74,9 @@ function Project() {
               <h1>Pending</h1>
 
               <div className="taskList">
-                Hello Pending
+                {teamTasks.filter((task) => task.status == "PENDING").map((task) => {
+                    return <Task key={task.id} taskData={task} user={user} manager={manager} members={members} />
+                })}
               </div>
             </div>
 
@@ -78,7 +84,9 @@ function Project() {
               <h1>Completed</h1>
 
               <div className="taskList">
-                Hello Completed
+                {teamTasks.filter((task) => task.status == "COMPLETED").map((task) => {
+                    return <Task key={task.id} taskData={task} user={user} manager={manager} members={members} />
+                })}
               </div>
             </div>
 
@@ -86,7 +94,9 @@ function Project() {
               <h1>Closed</h1>
 
               <div className="taskList">
-                Hello closed
+                {teamTasks.filter((task) => task.status == "CLOSED").map((task) => {
+                    return <Task key={task.id} taskData={task} user={user} manager={manager} members={members} />
+                })}
               </div>
             </div>
           </div>

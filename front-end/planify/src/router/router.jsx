@@ -6,6 +6,8 @@ import CreateProject from "../pages/createProject/CreateProject.jsx";
 import Projects from "../pages/projects/Projects.jsx";
 import Project from "../pages/project/Project.jsx";
 import CreateUser from "../pages/createUser/CreateUser.jsx";
+import UserTasks from "../pages/userTasks/UserTasks.jsx";
+import UserProjectTasks from "../pages/userProjectTasks/UserProjectTasks.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -23,10 +25,6 @@ const appRouter = createBrowserRouter([
           {
             path: ":user_id",
             element: <Projects />,
-          },
-          {
-            path: ":user_id/:project_id/tasks",
-            element: "View project tasks",
           },
           {
             path: ":user_id/:project_id",
@@ -49,33 +47,17 @@ const appRouter = createBrowserRouter([
         ],
       },
       {
-        path: "/manager",
-        element: <RoleBasedAccess roles={["manager"]} />,
-        children: [
-          {
-            path: "create-task",
-            element: "Create task",
-          },
-          {
-            path: "view-executants",
-            element: "View executants",
-            children: [
-              {
-                path: ":user_id",
-                element: "View executant tasks",
-              },
-            ],
-          },
-        ],
-      },
-      {
         path: "/user",
-        element: <RoleBasedAccess roles={["manager", "executant"]} />,
+        element: <RoleBasedAccess roles={["manager", "member"]} />,
         children: [
           {
             path: ":user_id/tasks",
-            element: "View own tasks",
+            element: <UserTasks />,
           },
+          {
+            path: ":user_id/:project_id/tasks",
+            element: <UserProjectTasks />
+          }
         ],
       },
     ],

@@ -1,5 +1,4 @@
 import "./SignIn.css"
-import { useRef, useState } from "react"
 import { Form, TextField, Button } from '@adobe/react-spectrum'
 import axios from "axios"
 import { URL } from "../../utils/utils.js"
@@ -11,64 +10,11 @@ import { ToastQueue } from "@react-spectrum/toast"
 import { setTasks } from "../../store/taskSlice.js"
 
 function SignIn() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-
-  let errors = useRef({
-    email: "",
-    password: ""
-  })
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const validateInputField = (value, inputKey) => {
-    if(value.length === 0){
-      errors.current[inputKey] = `Field ${inputKey} is required`
-
-      if(inputKey === "email"){
-        setEmail(value)
-      }else{
-        setPassword(value)
-      }
-
-      return
-    }
-    
-    switch(inputKey){
-      case "email":
-        setEmail(value)
-
-        const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-        
-        if(!validEmail){
-          errors.current.email = "Invalid email"
-        }else{
-          errors.current.email = ""
-        }
-        break
-
-      case "password":
-        setPassword(value)
-
-        if(value.length < 8){
-          errors.current.password = "Password must be at least 8 characters long"
-        }else{
-          errors.current.password = ""
-        }
-    }
-  }
-
   const onSubmit = async function(event){      
     event.preventDefault()
-
-    if(email.length === 0 || password.length === 0){
-      ToastQueue.negative("Incomplete credentials", {
-        timeout: 5000
-      })
-
-      return
-    }
 
     let data = Object.fromEntries(
       new FormData(event.currentTarget)
@@ -117,26 +63,22 @@ function SignIn() {
 
         <Form
         onSubmit={onSubmit}
+        validationBehavior="native"
         width="size-3600"
         >
             <TextField 
             type="email" 
             name="email" 
             label="Email" 
-            value={email}
-            onChange={(emailValue) => validateInputField(emailValue, "email")}
-            isInvalid={!!errors.current.email}
-            errorMessage={errors.current.email}
+            isRequired
             />
 
             <TextField 
             type="password" 
             name="password" 
             label="Password"
-            value={password}
-            onChange={(passwordValue) => validateInputField(passwordValue, "password")} 
-            isInvalid={!!errors.current.password}
-            errorMessage={errors.current.password}
+            isRequired
+            minLength={8}
             />
 
             <Button 

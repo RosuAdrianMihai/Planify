@@ -43,9 +43,9 @@ function Sidebar({ children, user }) {
                 <Link to="/admin/create-account">Create account</Link>
             </>}
 
-            {(role === "manager" || role === "executant") && 
+            {(role === "manager" || role === "member") && 
             <>
-                <Link to={`user/${user.id}/tasks`}>Tasks</Link>
+                <Link to={`/user/${user.id}/tasks`}>Tasks</Link>
             </>
             }
 
