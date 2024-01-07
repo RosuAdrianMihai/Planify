@@ -34,6 +34,10 @@ function UserTasks() {
     tasksUser = members.find((currentUser) => currentUser.id == user_id)
   }
 
+  if(projects.length === 0){
+    return <h2>You are not in a member or manager in any projects</h2>
+  }
+
   return (
     <div>
         <h1 className="userTasksHeader">Tasks for {tasksUser.name}</h1>
